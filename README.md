@@ -9,7 +9,7 @@ It is made for OneBlock, SkyBlock, superflat, and other limited worlds, where ma
 - 13 sifting inputs across the Overworld, Nether, and End.
 - Built-in JEI and EMI support so every table and chance is visible in-game.
 - English and Spanish translations (Argentina, Chile, Mexico, and Spain).
-- Optional compatibility with Eruruu Patch for its Crimson and Warped Cultures. It never requires that mod.
+- No required dependencies beyond NeoForge; JEI and EMI integration is optional.
 - A configurable exclusion tag for saplings from other dimensions.
 
 ## Sifting tables
