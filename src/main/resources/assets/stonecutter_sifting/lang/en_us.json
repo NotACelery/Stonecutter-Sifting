@@ -1,0 +1,23 @@
+{
+  "jei.stonecutter_sifting.sifting": "Stonecutter Sifting",
+  "emi.category.stonecutter_sifting.stonecutter_sifting": "Stonecutter Sifting",
+  "fml.menu.mods.info.description.stonecutter_sifting": "A renewable-resource sifting system for OneBlock, SkyBlock, and limited worlds. Drop supported blocks onto a Stonecutter to roll useful materials.",
+  "stonecutter_sifting.viewer.chance": "Chance: %s",
+  "stonecutter_sifting.viewer.guaranteed": "Guaranteed",
+  "stonecutter_sifting.viewer.pool_weight": "Common bonus pool weight: %s",
+  "stonecutter_sifting.viewer.processing": "Dropped blocks: 1 item every 4 ticks per Stonecutter",
+  "stonecutter_sifting.viewer.other_sapling": "Chance: %s — random non-oak #minecraft:saplings item",
+  "stonecutter_sifting.viewer.sand": "One exclusive roll per Sand. 59.5% of processed Sand contains nothing.",
+  "stonecutter_sifting.viewer.red_sand": "Desert-mineral table. 40% of processed Red Sand contains nothing.",
+  "stonecutter_sifting.viewer.gravel": "Flint is guaranteed. 50% of Gravel gets a bonus package; successful packages have a 30% chance for a second common roll. Diamond is exactly 1% overall.",
+  "stonecutter_sifting.viewer.soul_sand": "One exclusive Nether-themed roll per Soul Sand. With Eruruu Patch installed, Culture items replace the matching roots.",
+  "stonecutter_sifting.viewer.dirt": "40% nothing, 30% Bone Meal, 15% seed-family, 15% sapling-family. The non-oak sapling roll reads #minecraft:saplings dynamically.",
+  "stonecutter_sifting.viewer.podzol": "20% Spruce Sapling, 20% Bone Meal, 60% nothing.",
+  "stonecutter_sifting.viewer.rooted_dirt": "Lush Caves starter table. 30% of processed Rooted Dirt contains nothing.",
+  "stonecutter_sifting.viewer.moss": "Lush Caves expansion table. 35% of processed Moss contains nothing.",
+  "stonecutter_sifting.viewer.clay": "Aquatic vegetation table. 40% of processed Clay contains nothing.",
+  "stonecutter_sifting.viewer.mud": "Mangrove resource table. 45% of processed Mud contains nothing.",
+  "stonecutter_sifting.viewer.netherrack": "Nether recovery table. Ancient Debris is a 0.01% roll; 39.99% contains nothing.",
+  "stonecutter_sifting.viewer.blackstone": "Bastion-themed recovery table. 45% of processed Blackstone contains nothing.",
+  "stonecutter_sifting.viewer.end_stone": "End recovery table. 50% of processed End Stone contains nothing."
+}

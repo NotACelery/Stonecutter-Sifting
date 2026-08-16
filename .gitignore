@@ -8,3 +8,5 @@ logs/
 crash-reports/
 *.iml
 *.log
+CHANGELOG.md
+PUBLISHING.md

@@ -1,0 +1,43 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+logoFile="icon-stonecutter.png"
+authors="Celerbi"
+credits="Icon artwork by Mausermeyer"
+description='''
+Drop supported blocks onto a Stonecutter to sift them into useful resources.
+Built for renewable-resource routes in OneBlock, SkyBlock, and limited worlds.
+'''
+
+[[dependencies.stonecutter_sifting]]
+modId="neoforge"
+type="required"
+versionRange="${neo_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.stonecutter_sifting]]
+modId="minecraft"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.stonecutter_sifting]]
+modId="jei"
+type="optional"
+versionRange="[19,)"
+ordering="AFTER"
+side="CLIENT"
+
+[[dependencies.stonecutter_sifting]]
+modId="emi"
+type="optional"
+versionRange="[1.1.24,)"
+ordering="AFTER"
+side="CLIENT"
