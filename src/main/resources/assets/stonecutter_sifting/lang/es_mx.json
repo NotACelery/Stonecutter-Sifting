@@ -7,10 +7,10 @@
   "stonecutter_sifting.viewer.pool_weight": "Peso del pool común: %s",
   "stonecutter_sifting.viewer.processing": "Bloques arrojados: 1 objeto cada 4 ticks por cortapiedras",
   "stonecutter_sifting.viewer.other_sapling": "Probabilidad: %s — sapling no-roble aleatorio de #minecraft:saplings",
-  "stonecutter_sifting.viewer.sand": "Una tirada exclusiva por arena. El 59,5% de la arena procesada no contiene nada.",
+  "stonecutter_sifting.viewer.sand": "Una tirada exclusiva de arena más una tirada independiente de 0,25% para Sniffer Egg. El Sniffer Egg no reemplaza el resultado normal.",
   "stonecutter_sifting.viewer.red_sand": "Tabla desértico-mineral. El 40% de la arena roja procesada no contiene nada.",
   "stonecutter_sifting.viewer.gravel": "El Flint está garantizado. El 50% de la grava recibe un paquete bonus; los paquetes exitosos tienen 30% de obtener una segunda tirada común. Diamond tiene exactamente 1% total.",
-  "stonecutter_sifting.viewer.soul_sand": "Una tirada exclusiva temática del Nether por Soul Sand. Con Eruruu Patch instalado, las Cultures reemplazan las raíces correspondientes.",
+  "stonecutter_sifting.viewer.soul_sand": "Una tirada exclusiva temática del Nether por Soul Sand.",
   "stonecutter_sifting.viewer.dirt": "40% nada, 30% Bone Meal, 15% familia de semillas y 15% familia de saplings. La tirada no-roble lee #minecraft:saplings dinámicamente.",
   "stonecutter_sifting.viewer.podzol": "20% Spruce Sapling, 20% Bone Meal y 60% nada.",
   "stonecutter_sifting.viewer.rooted_dirt": "Tabla inicial de Lush Caves. El 30% de la Rooted Dirt procesada no contiene nada.",
@@ -19,5 +19,9 @@
   "stonecutter_sifting.viewer.mud": "Tabla de recursos de manglar. El 45% del Mud procesado no contiene nada.",
   "stonecutter_sifting.viewer.netherrack": "Tabla de recuperación del Nether. Ancient Debris tiene 0,01%; el 39,99% no contiene nada.",
   "stonecutter_sifting.viewer.blackstone": "Tabla de recuperación inspirada en bastiones. El 45% de la Blackstone procesada no contiene nada.",
-  "stonecutter_sifting.viewer.end_stone": "Tabla de recuperación del End. El 50% de la End Stone procesada no contiene nada."
+  "stonecutter_sifting.viewer.end_stone": "Tabla de recuperación del End. El 50% de la End Stone procesada no contiene nada.",
+  "stonecutter_sifting.viewer.prismarine": "Tabla de recuperación oceánica con 2 Prismarine Shards garantizados y tiradas bonus independientes.",
+  "stonecutter_sifting.viewer.prismarine_bricks": "Tabla oceánica mejorada con 4 Prismarine Shards garantizados y tiradas bonus independientes.",
+  "stonecutter_sifting.viewer.dark_prismarine": "Tabla oceánica rara con 4 Prismarine Shards garantizados y tiradas independientes de tinta, cristal, esponja, Heart of the Sea y coral.",
+  "stonecutter_sifting.viewer.random_coral": "Probabilidad: %s — bloque de coral vivo aleatorio"
 }

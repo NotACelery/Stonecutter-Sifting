@@ -26,7 +26,7 @@ public final class SiftingTables {
     private static final TagKey<Item> NON_OVERWORLD_SAPLINGS = TagKey.create(
             Registries.ITEM, ResourceLocation.fromNamespaceAndPath(StonecutterSifting.MOD_ID, "non_overworld_saplings"));
 
-    private static final float SAND_CACTUS = .20F, SAND_SUGAR_CANE = .15F, SAND_DEAD_BUSH = .05F, SAND_TURTLE_EGG = .005F;
+    private static final float SAND_CACTUS = .20F, SAND_SUGAR_CANE = .15F, SAND_DEAD_BUSH = .05F, SAND_TURTLE_EGG = .005F, SAND_SNIFFER_EGG = .0025F;
     private static final float RED_SAND_GOLD_NUGGET = .25F, RED_SAND_DEAD_BUSH = .15F, RED_SAND_CACTUS = .12F, RED_SAND_TERRACOTTA = .07F, RED_SAND_RAW_GOLD = .01F;
     private static final float GRAVEL_BONUS = .50F, GRAVEL_DIAMOND_IN_BONUS = .02F, GRAVEL_SECOND_COMMON = .30F;
     private static final float SOUL_WART = .15F, SOUL_BONE = .20F, SOUL_GOLD = .15F, SOUL_CRIMSON = .05F, SOUL_WARPED = .05F;
@@ -42,7 +42,7 @@ public final class SiftingTables {
     private static final float END_STONE_CHORUS = .30F, END_STONE_POPPED_CHORUS = .12F, END_STONE_FLOWER = .05F, END_STONE_ROD = .02F, END_STONE_PURPUR = .01F;
 
     public static final List<SiftingTable> TABLES = List.of(
-            exclusive("sand", Items.SAND, "sand", chance(Items.CACTUS, SAND_CACTUS), chance(Items.SUGAR_CANE, SAND_SUGAR_CANE), chance(Items.DEAD_BUSH, SAND_DEAD_BUSH), chance(Items.TURTLE_EGG, SAND_TURTLE_EGG)),
+            sandTable(),
             exclusive("red_sand", Items.RED_SAND, "red_sand", chance(Items.GOLD_NUGGET, RED_SAND_GOLD_NUGGET), chance(Items.DEAD_BUSH, RED_SAND_DEAD_BUSH), chance(Items.CACTUS, RED_SAND_CACTUS), chance(Items.TERRACOTTA, RED_SAND_TERRACOTTA), chance(Items.RAW_GOLD, RED_SAND_RAW_GOLD)),
             gravelTable(),
             soulSandTable(),
@@ -54,7 +54,10 @@ public final class SiftingTables {
             exclusive("mud", Items.MUD, "mud", chance(Items.CLAY_BALL, MUD_CLAY_BALL), chance(Items.MANGROVE_PROPAGULE, MUD_PROPAGULE), chance(Items.MANGROVE_ROOTS, MUD_ROOTS), chance(Items.MOSS_BLOCK, MUD_MOSS)),
             exclusive("netherrack", Items.NETHERRACK, "netherrack", chance(Items.QUARTZ, NETHERRACK_QUARTZ), chance(Items.GOLD_NUGGET, NETHERRACK_GOLD), chance(Items.GLOWSTONE_DUST, NETHERRACK_GLOWSTONE), chance(Items.NETHER_SPROUTS, NETHERRACK_SPROUTS), chance(Items.CRIMSON_ROOTS, NETHERRACK_CRIMSON_ROOTS), chance(Items.WARPED_ROOTS, NETHERRACK_WARPED_ROOTS), chance(Items.ANCIENT_DEBRIS, NETHERRACK_ANCIENT_DEBRIS)),
             exclusive("blackstone", Items.BLACKSTONE, "blackstone", chance(Items.GOLD_NUGGET, BLACKSTONE_GOLD), chance(Items.QUARTZ, BLACKSTONE_QUARTZ), chance(Items.BASALT, BLACKSTONE_BASALT), chance(Items.GLOWSTONE_DUST, BLACKSTONE_GLOWSTONE), chance(Items.GILDED_BLACKSTONE, BLACKSTONE_GILDED)),
-            exclusive("end_stone", Items.END_STONE, "end_stone", chance(Items.CHORUS_FRUIT, END_STONE_CHORUS), chance(Items.POPPED_CHORUS_FRUIT, END_STONE_POPPED_CHORUS), chance(Items.CHORUS_FLOWER, END_STONE_FLOWER), chance(Items.END_ROD, END_STONE_ROD), chance(Items.PURPUR_BLOCK, END_STONE_PURPUR))
+            exclusive("end_stone", Items.END_STONE, "end_stone", chance(Items.CHORUS_FRUIT, END_STONE_CHORUS), chance(Items.POPPED_CHORUS_FRUIT, END_STONE_POPPED_CHORUS), chance(Items.CHORUS_FLOWER, END_STONE_FLOWER), chance(Items.END_ROD, END_STONE_ROD), chance(Items.PURPUR_BLOCK, END_STONE_PURPUR)),
+            prismarineTable(),
+            prismarineBricksTable(),
+            darkPrismarineTable()
     );
 
     private static final Map<Item, SiftingTable> BY_INPUT = byInput();
@@ -95,10 +98,71 @@ public final class SiftingTables {
         });
     }
 
+    private static SiftingTable sandTable() {
+        SiftingTable base = exclusive("sand", Items.SAND, "sand",
+                chance(Items.CACTUS, SAND_CACTUS), chance(Items.SUGAR_CANE, SAND_SUGAR_CANE),
+                chance(Items.DEAD_BUSH, SAND_DEAD_BUSH), chance(Items.TURTLE_EGG, SAND_TURTLE_EGG));
+        List<SiftingOutput> outputs = new ArrayList<>(base.outputs());
+        outputs.add(chance(Items.SNIFFER_EGG, SAND_SNIFFER_EGG).output());
+        return table("sand", Items.SAND, List.copyOf(outputs), "sand", random -> {
+            List<ItemStack> results = new ArrayList<>(base.roll(random));
+            if (random.nextFloat() < SAND_SNIFFER_EGG) results.add(new ItemStack(Items.SNIFFER_EGG));
+            return merge(results);
+        });
+    }
+
     private static SiftingTable soulSandTable() {
-        Supplier<ItemStack> crimson = () -> optionalPatchItem("crimson_culture", Items.CRIMSON_ROOTS);
-        Supplier<ItemStack> warped = () -> optionalPatchItem("warped_culture", Items.WARPED_ROOTS);
-        return exclusive("soul_sand", Items.SOUL_SAND, "soul_sand", chance(Items.NETHER_WART, SOUL_WART), chance(Items.BONE, SOUL_BONE), chance(Items.GOLD_NUGGET, SOUL_GOLD), chance(crimson, SOUL_CRIMSON), chance(warped, SOUL_WARPED));
+        return exclusive("soul_sand", Items.SOUL_SAND, "soul_sand", chance(Items.NETHER_WART, SOUL_WART), chance(Items.BONE, SOUL_BONE), chance(Items.GOLD_NUGGET, SOUL_GOLD), chance(Items.CRIMSON_ROOTS, SOUL_CRIMSON), chance(Items.WARPED_ROOTS, SOUL_WARPED));
+    }
+
+    private static SiftingTable prismarineTable() {
+        List<SiftingOutput> outputs = List.of(
+                guaranteed(Items.PRISMARINE_SHARD, 2), chanceStack(Items.PRISMARINE_SHARD, 2, .25F),
+                chance(Items.PRISMARINE_CRYSTALS, .08F).output(), chance(Items.WET_SPONGE, .01F).output(),
+                chance(Items.HEART_OF_THE_SEA, .005F).output());
+        return table("prismarine", Items.PRISMARINE, outputs, "prismarine", random -> {
+            List<ItemStack> results = new ArrayList<>(List.of(new ItemStack(Items.PRISMARINE_SHARD, 2)));
+            if (random.nextFloat() < .25F) results.add(new ItemStack(Items.PRISMARINE_SHARD, 2));
+            if (random.nextFloat() < .08F) results.add(new ItemStack(Items.PRISMARINE_CRYSTALS));
+            if (random.nextFloat() < .01F) results.add(new ItemStack(Items.WET_SPONGE));
+            if (random.nextFloat() < .005F) results.add(new ItemStack(Items.HEART_OF_THE_SEA));
+            return merge(results);
+        });
+    }
+
+    private static SiftingTable prismarineBricksTable() {
+        List<SiftingOutput> outputs = List.of(
+                guaranteed(Items.PRISMARINE_SHARD, 4), chanceStack(Items.PRISMARINE_SHARD, 2, .35F), chanceStack(Items.PRISMARINE_SHARD, 3, .10F),
+                chance(Items.PRISMARINE_CRYSTALS, .12F).output(), chance(Items.WET_SPONGE, .015F).output(), chance(Items.HEART_OF_THE_SEA, .0075F).output(),
+                new SiftingOutput(() -> new ItemStack(Items.TUBE_CORAL), Component.translatable("stonecutter_sifting.viewer.random_coral", percent(.03F))));
+        return table("prismarine_bricks", Items.PRISMARINE_BRICKS, outputs, "prismarine_bricks", random -> {
+            List<ItemStack> results = new ArrayList<>(List.of(new ItemStack(Items.PRISMARINE_SHARD, 4)));
+            if (random.nextFloat() < .35F) results.add(new ItemStack(Items.PRISMARINE_SHARD, 2));
+            if (random.nextFloat() < .10F) results.add(new ItemStack(Items.PRISMARINE_SHARD, 3));
+            if (random.nextFloat() < .12F) results.add(new ItemStack(Items.PRISMARINE_CRYSTALS));
+            if (random.nextFloat() < .015F) results.add(new ItemStack(Items.WET_SPONGE));
+            if (random.nextFloat() < .0075F) results.add(new ItemStack(Items.HEART_OF_THE_SEA));
+            if (random.nextFloat() < .03F) results.add(randomCoral(random));
+            return merge(results);
+        });
+    }
+
+    private static SiftingTable darkPrismarineTable() {
+        List<SiftingOutput> outputs = List.of(
+                guaranteed(Items.PRISMARINE_SHARD, 4), chanceStack(Items.PRISMARINE_SHARD, 2, .35F), chanceStack(Items.PRISMARINE_SHARD, 2, .10F),
+                chance(Items.INK_SAC, .20F).output(), chance(Items.PRISMARINE_CRYSTALS, .15F).output(), chance(Items.WET_SPONGE, .02F).output(), chance(Items.HEART_OF_THE_SEA, .01F).output(),
+                new SiftingOutput(() -> new ItemStack(Items.TUBE_CORAL), Component.translatable("stonecutter_sifting.viewer.random_coral", percent(.04F))));
+        return table("dark_prismarine", Items.DARK_PRISMARINE, outputs, "dark_prismarine", random -> {
+            List<ItemStack> results = new ArrayList<>(List.of(new ItemStack(Items.PRISMARINE_SHARD, 4)));
+            if (random.nextFloat() < .35F) results.add(new ItemStack(Items.PRISMARINE_SHARD, 2));
+            if (random.nextFloat() < .10F) results.add(new ItemStack(Items.PRISMARINE_SHARD, 2));
+            if (random.nextFloat() < .20F) results.add(new ItemStack(Items.INK_SAC));
+            if (random.nextFloat() < .15F) results.add(new ItemStack(Items.PRISMARINE_CRYSTALS));
+            if (random.nextFloat() < .02F) results.add(new ItemStack(Items.WET_SPONGE));
+            if (random.nextFloat() < .01F) results.add(new ItemStack(Items.HEART_OF_THE_SEA));
+            if (random.nextFloat() < .04F) results.add(randomCoral(random));
+            return merge(results);
+        });
     }
 
     private static SiftingTable dirtTable() {
@@ -120,12 +184,20 @@ public final class SiftingTables {
         return chance(() -> new ItemStack(item), chance);
     }
 
+    private static SiftingOutput chanceStack(Item item, int count, float chance) {
+        return new SiftingOutput(() -> new ItemStack(item, count), Component.translatable("stonecutter_sifting.viewer.chance", percent(chance)));
+    }
+
     private static Entry chance(Supplier<ItemStack> stack, float chance) {
         return new Entry(chance, new SiftingOutput(stack, Component.translatable("stonecutter_sifting.viewer.chance", percent(chance))));
     }
 
     private static SiftingOutput guaranteed(Item item) {
-        return new SiftingOutput(() -> new ItemStack(item), Component.translatable("stonecutter_sifting.viewer.guaranteed"));
+        return guaranteed(item, 1);
+    }
+
+    private static SiftingOutput guaranteed(Item item, int count) {
+        return new SiftingOutput(() -> new ItemStack(item, count), Component.translatable("stonecutter_sifting.viewer.guaranteed"));
     }
 
     private static SiftingOutput pool(Item item, float weight) {
@@ -165,9 +237,14 @@ public final class SiftingTables {
         return new ItemStack(Items.OAK_SAPLING);
     }
 
-    private static ItemStack optionalPatchItem(String path, Item fallback) {
-        Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("eruruu_patch", path));
-        return new ItemStack(item == Items.AIR ? fallback : item);
+    private static ItemStack randomCoral(RandomSource random) {
+        return switch (random.nextInt(5)) {
+            case 0 -> new ItemStack(Items.TUBE_CORAL);
+            case 1 -> new ItemStack(Items.BRAIN_CORAL);
+            case 2 -> new ItemStack(Items.BUBBLE_CORAL);
+            case 3 -> new ItemStack(Items.FIRE_CORAL);
+            default -> new ItemStack(Items.HORN_CORAL);
+        };
     }
 
     private static List<ItemStack> merge(List<ItemStack> stacks) {
